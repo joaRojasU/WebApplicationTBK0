@@ -34,5 +34,28 @@ namespace WebApplicationTBK0.Controllers
 
             return View();
         }
+
+        public ActionResult Return()
+        {
+            var transaction = new Webpay(Configuration.ForTestingWebpayPlusNormal()).NormalTransaction;
+            string tokenWs = Request.Form["token_ws"];
+
+            var result = transaction.getTransactionResult(tokenWs);
+            var output = result.detailOutput[0];
+            if (output.responseCode == 0)
+            {
+                ViewBag.UrlRedirection = result.urlRedirection;
+                ViewBag.TokenWs = tokenWs;
+                ViewBag.ResponseCode = output.responseCode;
+                ViewBag.Amount = output.amount;
+                ViewBag.AuthorizationCode = output.authorizationCode; 
+            }
+
+            return View();
+        }
+        public ActionResult Final()
+        {
+            return View();
+        }
     }
 }
