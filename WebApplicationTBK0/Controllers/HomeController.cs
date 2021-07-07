@@ -19,8 +19,8 @@ namespace WebApplicationTBK0.Controllers
             var buyOrder = new Random().Next(100000, 999999999).ToString(); //Este objeto genera un numero de orden de compra
             var sessionId = "sessionId";
 
-            string returnUrl = "https://localhost:8080/home/Return";
-            string finalUrl = "https://localhost:8080/home/Final";
+            string returnUrl = "http://localhost:8080/home/Return";
+            string finalUrl = "http://localhost:8080/home/Final";
 
             var initResult = transaction.initTransaction(amount, buyOrder, sessionId, returnUrl, finalUrl);
 
@@ -43,13 +43,13 @@ namespace WebApplicationTBK0.Controllers
             var result = transaction.getTransactionResult(tokenWs);
             var output = result.detailOutput[0];
             if (output.responseCode == 0)
-            {
+                {
                 ViewBag.UrlRedirection = result.urlRedirection;
                 ViewBag.TokenWs = tokenWs;
                 ViewBag.ResponseCode = output.responseCode;
                 ViewBag.Amount = output.amount;
                 ViewBag.AuthorizationCode = output.authorizationCode; 
-            }
+                }   
 
             return View();
         }
